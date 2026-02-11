@@ -15,20 +15,25 @@
 
 1.  **米哈游 (miHoYo)**: `main.py`
     *   目标网站：[米哈游校园招聘](https://campus.mihoyo.com/)
-    *   输出文件：`mihoyo_campus_jobs.xlsx` (或类似)
+    *   输出文件：`mihoyo_campus_jobs.xlsx`
 2.  **字节跳动 (Bytedance)**: `bytedance_crawler.py`
     *   目标网站：[字节跳动校园招聘](https://jobs.bytedance.com/campus/position)
     *   输出文件：`bytedance_campus_jobs.xlsx`
+3.  **百度 (Baidu)**: `baidu_crawler.py`
+    *   目标网站：[百度校园招聘 (实习生)](https://talent.baidu.com/jobs/list?recruitType=INTERN)
+    *   输出文件：`baidu_campus_jobs.xlsx`
 
 ## 🛠️ 实现思路
 
 1.  **自动化控制 (Playwright)**：
-    *   为了绕过可能存在的反爬策略（如 API 签名校验、动态渲染），本项目使用 Playwright 驱动浏览器模拟真实用户操作。
-    *   自动处理翻页逻辑（识别 `Next` 按钮状态、`aria-disabled` 属性等）。
+    *   本项目统一使用 Playwright 驱动浏览器。
+    *   **米哈游**：拦截 `/api/job/list` 和 `/api/job/info` 接口。
+    *   **字节跳动**：拦截 `/api/v1/search/job/posts` 接口，并针对 Ant Design 的翻页组件进行了特殊处理。
+    *   **百度**：由于百度官网存在较强的反爬/环境检测机制（会导致普通自动化浏览器白屏），本项目采用了 **禁用 JavaScript** 的 SSR（服务端渲染）抓取策略。通过 URL 参数 `page=x` 控制翻页，并解析静态 HTML 获取职位数据。
 
 2.  **数据采集策略**：
-    *   **米哈游**：拦截 `/api/job/list` (列表) 和 `/api/job/info` (详情) 接口。
-    *   **字节跳动**：拦截 `/api/v1/search/job/posts` 接口，该接口直接返回了列表及详细描述，无需二次请求详情页。
+    *   针对不同站点特性选择最优方案（API 拦截 vs 静态解析）。
+
 
 3.  **数据流处理**：
     *   爬取过程中数据暂存在内存中，利用 `pandas` 和 `openpyxl` 生成最终报表，不产生中间临时文件。
@@ -69,9 +74,19 @@ playwright install
         ```bash
         python bytedance_crawler.py
         ```
+    *   **爬取百度 (Baidu)**：
+        ```bash
+        python baidu_crawler.py
+        ```
 
 2.  **查看结果**：
-    脚本运行完成后，会在当前目录下生成对应的 Excel 文件，如 `mihoyo_campus_jobs_full.xlsx` 或 `bytedance_campus_jobs.xlsx`。
+    脚本运行完成后，会在当前目录下生成对应的 Excel 文件，如 `mihoyo_campus_jobs_full.xlsx`、`bytedance_campus_jobs.xlsx` 或 `baidu_campus_jobs.xlsx`。
+
+## 📝 字段说明
+本项目生成的 EXCEL 将包含以下主要字段：
+- **米哈游**：岗位名称、岗位类别、性质、学历要求、工作地点、任职要求、工作职责、加分项。
+- **字节跳动**：岗位名称、岗位类别、性质、学历要求、工作地点、任职要求、工作职责（与米哈游类似，但基于字节跳动 API 结构解析）。
+- **百度**：核心字段与上述一致，但数据来源于静态 HTML 解析，包含职位描述的自动拆分（任职要求/工作职责）。
 
 ## 📄 输出示例
 
