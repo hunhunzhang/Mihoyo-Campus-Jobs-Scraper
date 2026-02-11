@@ -106,6 +106,6 @@ playwright install
 7.  `优化整个项目的代码将爬取的数据直接采用excel存储省去存为json再由json转为excel的步骤。`
 8.  `我现在要将当前项目转化为github仓库并上传，请你删除多余无用的代码和文件并添加仓库的README文档，和环境配置需求文档。在README文档中说明项目做了什么、实现思路及如何使用，注意格式美观、清晰。`
 9.  `将我当前项目的会话历史（由我输入的所有提示词）按顺序写入README中的“完成本项目所用提示词”部分`
-
+10. `作为完成本项目的重要工具，请你在README的”完成本项目所用工具“中介绍你自己并列出实现本项目你所用到的所有工具列表及其作用`
 ---
 *Disclaimer: This tool is for educational purposes only. Please respect the website's terms of service and robots.txt.*
