@@ -72,17 +72,26 @@ playwright install
 *   所有单元格自动换行，顶端对齐。
 *   根据内容类型预设列宽。
 
-## 🤖 完成项目所用工具
+## 🤖 完成本项目所用工具
 
-本项目主要由 **GitHub Copilot** (Model: Gemini 3 Pro Preview) 协助开发者完成。在开发过程中，Copilot 调用了以下关键工具来加速开发流程：
+本项目完全由 AI 编程助手辅助构建。
 
-| 工具名称 | 作用 | 实际应用场景 |
-| :--- | :--- | :--- |
-| **fetch_webpage** | 网页内容抓取 | 获取米哈游校招官网的初始文本和结构，辅助理解页面布局。 |
-| **run_in_terminal** | 终端命令执行 | 运行 Python 脚本、安装依赖 (`pip install`)、执行 Git 操作以及调试代码。 |
-| **create_file** | 文件创建 | 快速生成爬虫脚本 (`main.py`)、配置文件 (`requirements.txt`) 和文档 (`README.md`)。 |
-| **replace_string_in_file** | 智能文件编辑 | 对现有代码进行精确修改，如优化分页逻辑、添加字段提取功能和修复 Bug。 |
-| **runSubagent** | 子智能体任务 | 尝试搜索和分析 API 端点，辅助判断页面加载机制（SPA/API）。 |
+*   **AI 助手**: **GitHub Copilot**
+*   **使用模型**: **Gemini 3 Pro (Preview)**
+
+### 💡 核心开发工具 (Agent Tools)
+在实现本项目的过程中，Copilot 综合运用了以下能力工具：
+
+1.  **fetch_webpage**: 抓取米哈游招聘官网的前端页面，快速理解网页结构与反爬机制。
+2.  **grep_search**: 对下载的网页 `main.js` 核心代码进行文本搜索与分析，成功逆向出隐藏的 API 接口 (`/api/job/list`, `/api/job/info`)。
+3.  **run_in_terminal**: 直接在终端环境中执行命令，用于安装 Python 依赖库、运行爬虫脚本进行测试、以及执行 Git 版本管理。
+4.  **create_file / replace_string_in_file**: 从零编写并持续迭代项目核心代码 (`main.py`)，自动修复运行报错，并生成项目文档。
+
+### 🏗️ 项目技术栈 (Tech Stack)
+*   **Python**: 核心编程语言。
+*   **Playwright**: 用于浏览器自动化操作与网络请求拦截（核心爬虫库）。
+*   **Pandas**: 用于数据清洗与结构化处理（Excel 导出）。
+*   **OpenPyXL**: 用于生成样式美观的 Excel 报表（格式调整）。
 
 ## 💬 完成本项目所用提示词
 
