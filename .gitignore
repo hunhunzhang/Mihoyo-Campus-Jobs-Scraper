@@ -1,5 +1,5 @@
 __pycache__/
-*.json
-*.xlsx
+*.json/
 .vscode/
 .env
+*.xlsx

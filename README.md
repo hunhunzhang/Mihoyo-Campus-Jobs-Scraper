@@ -1,34 +1,37 @@
-# Mihoyo Campus Jobs Scraper / 米哈游校招爬虫
+# Campus Jobs Scraper / 校园招聘爬虫集合
 
-一个基于 Python Playwright 的自动化爬虫工具，用于抓取米哈游校园招聘官网的职位信息，并直接生成格式化好的 Excel 报表。
+一个基于 Python Playwright 的自动化爬虫工具集合，目前支持抓取 **米哈游 (miHoYo)** 和 **字节跳动 (Bytedance)** 的校园招聘官网职位信息，并直接生成格式化好的 Excel 报表。
 
 ## ✨ 项目功能
 
-*   **全自动抓取**：自动遍历米哈游校招官网的所有职位列表页。
-*   **深度解析**：针对每个职位自动抓取详情页，提取“任职要求”、“工作职责”、“加分项”等详细描述。
-*   **数据清洗**：自动从文本中提取“学历要求”字段。
-*   **Excel 导出**：直接生成美观的 `.xlsx` 文件，包含以下字段：
-    *   岗位名称
-    *   岗位类别（如程序&技术类）
-    *   性质（如实习生专项）
-    *   学历要求（自动提取）
-    *   任职要求
-    *   工作职责
-    *   加分项
+*   **多平台支持**：独立脚本分别针对不同企业的招聘系统进行适配。
+*   **全自动抓取**：自动遍历官网的所有职位列表页，智能处理翻页。
+*   **API 拦截 (Network Interception)**：直接拦截浏览器发出的 API 响应数据，效率高且稳定，规避了复杂的 HTML 解析。
+*   **深度解析**：针对每个职位提取详情，如“任职要求”、“工作职责”、“加分项”等。
+*   **数据清洗**：自动从文本中提取“学历要求”等关键字段。
+*   **美观报表**：直接生成带有样式、列宽调整的 `.xlsx` 文件。
+
+## 📂 包含脚本
+
+1.  **米哈游 (miHoYo)**: `main.py`
+    *   目标网站：[米哈游校园招聘](https://campus.mihoyo.com/)
+    *   输出文件：`mihoyo_campus_jobs.xlsx` (或类似)
+2.  **字节跳动 (Bytedance)**: `bytedance_crawler.py`
+    *   目标网站：[字节跳动校园招聘](https://jobs.bytedance.com/campus/position)
+    *   输出文件：`bytedance_campus_jobs.xlsx`
 
 ## 🛠️ 实现思路
 
 1.  **自动化控制 (Playwright)**：
-    *   为了绕过可能存在的反爬策略（如 API 签名校验），本项目不直接请求 API，而是使用 Playwright 驱动浏览器模拟真实用户操作。
-    *   脚本会根据系统环境自动选择 Chrome、Edge 或 Chromium 浏览器启动。
+    *   为了绕过可能存在的反爬策略（如 API 签名校验、动态渲染），本项目使用 Playwright 驱动浏览器模拟真实用户操作。
+    *   自动处理翻页逻辑（识别 `Next` 按钮状态、`aria-disabled` 属性等）。
 
-2.  **API 拦截 (Network Interception)**：
-    *   **效率优化**：虽然是模拟浏览器，但我们并不通过解析 DOM HTML 来获取数据，而是直接拦截浏览器发出的网络请求响应（Response Hook）。
-    *   **列表接口**：拦截 `/api/job/list` 获取职位 ID 和基础信息。
-    *   **详情接口**：拦截 `/api/job/info` 获取完整的职位描述。
+2.  **数据采集策略**：
+    *   **米哈游**：拦截 `/api/job/list` (列表) 和 `/api/job/info` (详情) 接口。
+    *   **字节跳动**：拦截 `/api/v1/search/job/posts` 接口，该接口直接返回了列表及详细描述，无需二次请求详情页。
 
 3.  **数据流处理**：
-    *   爬取过程中数据暂存在内存中，去重后直接利用 `pandas` 和 `openpyxl` 生成最终报表，不产生中间临时文件。
+    *   爬取过程中数据暂存在内存中，利用 `pandas` 和 `openpyxl` 生成最终报表，不产生中间临时文件。
 
 ## 📦 环境要求与安装
 
@@ -58,12 +61,17 @@ playwright install
 
 1.  **运行脚本**：
 
-    ```bash
-    python main.py
-    ```
+    *   **爬取米哈游 (miHoYo)**：
+        ```bash
+        python main.py
+        ```
+    *   **爬取字节跳动 (Bytedance)**：
+        ```bash
+        python bytedance_crawler.py
+        ```
 
 2.  **查看结果**：
-    脚本运行完成后，会在当前目录下生成 `mihoyo_campus_jobs_full.xlsx`。
+    脚本运行完成后，会在当前目录下生成对应的 Excel 文件，如 `mihoyo_campus_jobs_full.xlsx` 或 `bytedance_campus_jobs.xlsx`。
 
 ## 📄 输出示例
 
