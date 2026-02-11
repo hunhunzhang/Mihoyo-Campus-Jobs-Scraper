@@ -72,5 +72,19 @@ playwright install
 *   所有单元格自动换行，顶端对齐。
 *   根据内容类型预设列宽。
 
+## 💬 完成本项目所用提示词
+
+以下是构建该项目过程中所使用的 Prompt 历史，按时间顺序排列：
+
+1.  `写个python爬虫，爬取https://jobs.mihoyo.com/#/campus/position这个网页的所有招聘信息，并转化为结构化数据存储起来`
+2.  `检查当前窗口输出分析问题`
+3.  `对于每项岗位我需要爬取页面的更多内容信息如https://jobs.mihoyo.com/#/campus/position/6681此页面的“工作职责”、“任职要求”、“加分项”等部分内容`
+4.  `编写一个新的代码文件实现将结构化的json数据文件转化为excel表格，表格有“岗位名称”“岗位类别”（如程序&技术类）“性质”（实习/2026秋招）“任职要求”“工作职责”“加分项”等`
+5.  `转化为表格在调整行高，对于任职要求、工作职责、加分项等每说完一项要求就换行，使得excel表格大小合适美观`
+6.  `在“性质”列之后添加一列“学厉要求”内容在“任职要求”中提取出来`
+7.  `优化整个项目的代码将爬取的数据直接采用excel存储省去存为json再由json转为excel的步骤。`
+8.  `我现在要将当前项目转化为github仓库并上传，请你删除多余无用的代码和文件并添加仓库的README文档，和环境配置需求文档。再README`
+9.  `将我当前项目的会话历史（由我输入的所有提示词）按顺序写入README中的“完成本项目所用提示词”部分`
+
 ---
 *Disclaimer: This tool is for educational purposes only. Please respect the website's terms of service and robots.txt.*
