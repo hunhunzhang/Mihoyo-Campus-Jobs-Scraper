@@ -2,6 +2,5 @@ __pycache__/
 *.json
 .vscode/
 .env
-*.xlsx
 *.log
 
