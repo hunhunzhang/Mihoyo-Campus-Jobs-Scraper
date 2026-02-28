@@ -1,5 +1,7 @@
 __pycache__/
-*.json/
+*.json
 .vscode/
 .env
+*.xlsx
+*.log
 
