@@ -1,4 +1,5 @@
 import json
+
 import time
 import re
 import requests
@@ -23,10 +24,10 @@ class MeituanJobScraper:
         total_fetched = 0
         
         job_types_to_scrape = [
-            # 北斗计划 (hiringType=1_1-3)
-            {'name': '北斗计划', 'payload': {'jobType': [{'code': '1', 'subCode': ['1-3']}], 'typeCode': ['1-3']}},
-            # 校园招聘 (包含应届生、转正实习、日常实习)
-            {'name': '校园招聘', 'payload': {'jobType': [{'code': '4', 'subCode': ['1', '2', '6']}], 'typeCode': ['1', '2', '6']}}
+            # 应届生 (jobType: 1, subCode: 1, 3, 7)
+            {'name': '应届生', 'payload': {'jobType': [{'code': '1', 'subCode': ['1', '3', '7']}]}},
+            # 实习生 (jobType: 2, subCode: 1, 3, 6)包含转正实习、北斗实习、日常实习
+            {'name': '实习生', 'payload': {'jobType': [{'code': '2', 'subCode': ['1', '3', '6']}]}}
         ]
 
         try:
