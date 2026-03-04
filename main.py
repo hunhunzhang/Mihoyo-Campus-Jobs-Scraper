@@ -1,6 +1,7 @@
 import time
 import re
 import pandas as pd
+import os
 from playwright.sync_api import sync_playwright
 from openpyxl import load_workbook
 from openpyxl.styles import Alignment, Font, PatternFill, Border, Side
@@ -222,7 +223,8 @@ def save_to_excel(jobs_data, filename):
 
 def run_crawler():
     scraper = MihoyoJobScraper()
-    output_file = "e:/pachong/mihoyo_campus_jobs_full.xlsx"
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    output_file = os.path.join(script_dir, "mihoyo_campus_jobs_full.xlsx")
     
     with sync_playwright() as p:
         scraper.start_browser(p)
